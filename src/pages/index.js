@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Navigation } from "../components/landing/navigation";
 import { Header } from "../components/landing/header";
 import { Features } from "../components/landing/features";
@@ -8,13 +8,8 @@ import { Gallery } from "../components/landing/gallery";
 import { Testimonials } from "../components/landing/testimonials";
 import { Contact } from "../components/landing/contact";
 import JsonData from "../components/landing/data/data.json";
-import SmoothScroll from "smooth-scroll";
 import "../components/landing//App.css";
 
-export const scroll = new SmoothScroll('a[href*="#"]', {
-  speed: 1000,
-  speedAsDuration: true,
-});
 
 const App = () => {
   const [landingPageData, setLandingPageData] = useState({});
