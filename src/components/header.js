@@ -33,7 +33,6 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    background: 'linear-gradient(to right,  #663399, #5B72FF)',
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -81,20 +80,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const Header = ({ siteTitle }) => {
-  const classes = useStyles()
-
-  const theme = useTheme()
-  const [open, setOpen] = React.useState(false)
-
-  function handleDrawerOpen() {
-    setOpen(true)
-  }
-
-  function handleDrawerClose() {
-    setOpen(false)
-  }
-
+const Header = ({ title,  }) => {
   return (
     <div className={classes.root}>
       <CssBaseline />
