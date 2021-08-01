@@ -1,52 +1,73 @@
-require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
-});
-
-const contentfulConfig = {
-  spaceId: process.env.CONTENTFUL_SPACE_ID,
-  accessToken:
-    process.env.CONTENTFUL_ACCESS_TOKEN ||
-    process.env.CONTENTFUL_DELIVERY_TOKEN,
-};
-
-// If you want to use the preview API please define
-// CONTENTFUL_HOST and CONTENTFUL_PREVIEW_ACCESS_TOKEN in your
-// environment config.
-//
-// CONTENTFUL_HOST should map to `preview.contentful.com`
-// CONTENTFUL_PREVIEW_ACCESS_TOKEN should map to your
-// Content Preview API token
-//
-// For more information around the Preview API check out the documentation at
-// https://www.contentful.com/developers/docs/references/content-preview-api/#/reference/spaces/space/get-a-space/console/js
-//
-// To change back to the normal CDA, remove the CONTENTFUL_HOST variable from your environment.
-if (process.env.CONTENTFUL_HOST) {
-  contentfulConfig.host = process.env.CONTENTFUL_HOST;
-  contentfulConfig.accessToken = process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN;
-}
-
-const { spaceId, accessToken } = contentfulConfig;
-
-if (!spaceId || !accessToken) {
-  throw new Error(
-    "Contentful spaceId and the access token need to be provided."
-  );
-}
-
 module.exports = {
   siteMetadata: {
-    title: "Gatsby Contentful starter",
+    title: `A react next landing page`,
+    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
+    author: `@gatsbyjs`,
   },
-  pathPrefix: "/gatsby-contentful-starter",
   plugins: [
-    "gatsby-transformer-remark",
-    "gatsby-transformer-sharp",
-    "gatsby-plugin-react-helmet",
-    "gatsby-plugin-sharp",
+    `gatsby-plugin-image`,
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
     {
-      resolve: "gatsby-source-contentful",
-      options: contentfulConfig,
+      resolve: `gatsby-plugin-styled-components`,
+      options: {
+        minify: false, // Breaks styles if not set to false
+      },
     },
+    `gatsby-plugin-react-helmet`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/src/images`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `common`,
+        path: `${__dirname}/src/common/assets/`,
+      },
+    },
+    `gatsby-transformer-json`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `data`,
+        path: `${__dirname}/src/common/data/`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `gatsby-starter-default`,
+        short_name: `starter`,
+        start_url: `/`,
+        background_color: `#663399`,
+        theme_color: `#663399`,
+        display: `minimal-ui`,
+        icon: `src/images/favicon.png`, // This path is relative to the root of the site.
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-web-font-loader',
+      options: {
+        google: {
+          families: [
+            'Poppins:300,400,500,600,700',
+            'DM Sans:100,300,400,400i,500,500i,600,700,700i',
+            'B612:400,400i,700,700i',
+            'Heebo:300,400,500,600,700,800',
+            'Raleway:500,600',
+            'Open Sans:300,400,600,700,800',
+            'Lato:300,400,700',
+            'Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i',
+          ],
+        },
+      },
+    },
+    // this (optional) plugin enables Progressive Web App + Offline functionality
+    // To learn more, visit: https://gatsby.app/offline
+    // 'gatsby-plugin-offline',
   ],
 };
